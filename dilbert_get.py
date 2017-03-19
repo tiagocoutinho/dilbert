@@ -20,7 +20,7 @@ from requests.exceptions import ConnectionError
 
 from bs4 import BeautifulSoup
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 name = "dilbert"
 site = 'http://www.{}.com'.format(name)
@@ -126,7 +126,7 @@ def __main():
     import time
     import argparse
     start = time.time()
-    parser = argparse.ArgumentParser(description='dilbert downloader')
+    parser = argparse.ArgumentParser(description='dilbert downloader', version=__version__)
     parser.add_argument('-o', '--output-dir', default='~/Downloads/dilbert')
     parser.add_argument('-s', '--start-date', default=first)
     parser.add_argument('-e', '--end-date', default=last)

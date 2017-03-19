@@ -16,7 +16,7 @@ requirements = [
 
 setup(
     name='dilbert-get',
-    version='0.0.2',
+    version='0.0.3',
     description="downloader of dilbert comics",
     author="Tiago Coutinho",
     author_email='coutinhotiago@gmail.com',
