@@ -20,7 +20,7 @@ from requests.exceptions import ConnectionError
 
 from bs4 import BeautifulSoup
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 name = "dilbert"
 site = 'http://www.{}.com'.format(name)
@@ -92,7 +92,7 @@ def process_page(page, out_dir="."):
     try:
         suffix, image_url = get_page_image_url(page)
     except:
-        logging.error('Failed to get page %d', page)
+        logging.error('Failed to get page %s', page)
         return
     file_name = str(page)
     if suffix:
