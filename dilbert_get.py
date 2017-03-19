@@ -20,7 +20,7 @@ from requests.exceptions import ConnectionError
 
 from bs4 import BeautifulSoup
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 
 name = "dilbert"
 site = 'http://www.{}.com'.format(name)
@@ -116,7 +116,7 @@ def process(out_dir=".", pages=None, pool=None):
     pool = get_pool(pool)
     Task = functools.partial(pool.spawn, process_page,
                              out_dir=out_dir)
-    pages = tuple(pages or ipages())
+    pages = tuple(pages or idates())
     logging.info('Fetching pages [%s, %s] (parallel=%d)', pages[0], pages[-1], pool.size)
     tasks = map(Task, pages)
     gevent.joinall(tuple(tasks))
