@@ -20,7 +20,7 @@ from requests.exceptions import ConnectionError
 
 from bs4 import BeautifulSoup
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 name = "dilbert"
 site = 'http://www.{}.com'.format(name)
@@ -42,7 +42,7 @@ def idates(start=first, end=datetime.date.today(), step=datetime.timedelta(days=
         date += step
 
 def get_pool(pool=None, size=5):
-    return pool or gevent.pool.Pool(size=size)
+    return gevent.pool.Pool(size=size) if pool is None else pool
 
 def get_url(url, retries=5):
     logging.info("Asking for %s...", url)
@@ -117,7 +117,7 @@ def process(out_dir=".", pages=None, pool=None):
     Task = functools.partial(pool.spawn, process_page,
                              out_dir=out_dir)
     pages = tuple(pages or ipages())
-    logging.info('Fetching pages [%s, %s] (parellel=%d)', pages[0], pages[-1], pool.size)
+    logging.info('Fetching pages [%s, %s] (parallel=%d)', pages[0], pages[-1], pool.size)
     tasks = map(Task, pages)
     gevent.joinall(tuple(tasks))
 
@@ -133,7 +133,6 @@ def __main():
     parser.add_argument('--max-parallel', default=5, type=int)
     logging.basicConfig(level=logging.INFO, format="%(levelname)-8s %(message)s")
     args = parser.parse_args()
-
     pages = idates(args.start_date, args.end_date)
     pool = get_pool(size=args.max_parallel)
     process(out_dir=os.path.expanduser(args.output_dir), pages=pages, pool=pool)
